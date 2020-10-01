@@ -9,16 +9,16 @@ class BookmarksController extends require('./Controller') {
 
     get(id){
         let params = this.getQueryStringParams();
-        let jsonObj = {};
         if(!isNaN(id))
-            jsonObj = this.bookmarksRepository.get(id);
+            this.response.JSON(this.bookmarksRepository.get(id));
         else if(params == null)
-            jsonObj = this.bookmarksRepository.getAll();
+            this.response.JSON(this.bookmarksRepository.getAll());
         else if(Object.keys(params).length === 0)
+        {
             this.help();
+        }
         else
-            jsonObj = this.checkSort(params);
-        this.response.JSON(jsonObj);
+            this.response.JSON(this.checkSort(params));
     }
     post(bookmark){  
         if(this.checkValidBookmark(bookmark) && this.checkDuplicate(bookmark))
@@ -51,13 +51,13 @@ class BookmarksController extends require('./Controller') {
         // expose all the possible query strings
         let content = "<div style=font-family:arial>";
         content += "<h3>GET : api/bookmarks endpoint  <br> List of possible query strings:</h3><hr>";
-        content += "<h4>? sort=name <br>voir tous les bookmarks triés ascendant par Name </h4>";
-        content += "<h4>? sort=category <br>voir tous les bookmarks triés descendant par Category </h4>";
+        content += "<h4>? sort=name <br>voir tous les bookmarks tries ascendant par Name </h4>";
+        content += "<h4>? sort=category <br>voir tous les bookmarks tries descendant par Category </h4>";
         content += "<h4>/id <br>voir le bookmark Id</h4>";
         content += "<h4>?name=nom <br>voir le bookmark avec Name = nom</h4>";
         content += "<h4>?name=ab* <br>voir tous les bookmarks avec Name commençant par ab</h4>";
         content += "<h4>?category=sport <br>voir tous les bookmarks avec Category = sport</h4>";
-        content += "<h4>? <br>Voir la liste des paramètres supportés</h4>";
+        content += "<h4>? <br>Voir la liste des parametres supportes</h4>";
         this.res.writeHead(200, {'content-type':'text/html'});
         this.res.end(content) + "</div>";
     }
