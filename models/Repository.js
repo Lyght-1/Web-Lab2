@@ -79,7 +79,7 @@ class Repository {
     update(objectToModify) {
         let index = 0;
         for(let object of this.objectsList){
-            if (object.Id.toString() === objectToModify.Id) {
+            if (object.Id === objectToModify.Id) {
                 this.objectsList[index] = objectToModify;
                 this.write();
                 return true;
